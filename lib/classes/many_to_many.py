@@ -63,6 +63,17 @@ class Magazine:
             self._name=name
         else:
             raise ValueError("Magazine name must be a string between 2 and 16 characters.")
+        
+    @property
+    def category(self):
+        return self._category
+    
+    @category.setter
+    def category(self, category):
+        if isinstance(category, str) and 0 < len(category):
+            self._category=category
+        else:
+            raise ValueError("Category must be a string characters.")
 
     def articles(self):
         pass
