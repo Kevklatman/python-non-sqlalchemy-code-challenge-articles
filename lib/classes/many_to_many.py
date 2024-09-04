@@ -22,6 +22,7 @@ class Article:
 
         
 class Author:
+    all = []
     def __init__(self, name):
         if isinstance(name, str) and len(name) > 0:
             self._name = name
@@ -37,13 +38,13 @@ class Author:
         
 
     def articles(self):
-        pass
+        return [article for article in Article.all_articles if article.author == self]
 
     def magazines(self):
-        pass
+        return list({article.magazine for article in self.articles()})
 
     def add_article(self, magazine, title):
-        pass
+        Article(title, self, magazine)
 
     def topic_areas(self):
         pass
@@ -53,6 +54,7 @@ class Magazine:
     def __init__(self, name, category):
         self.name = name        
         self.category = category
+        Magazine.all.append(self)
 
     @property
     def name(self):
@@ -77,7 +79,7 @@ class Magazine:
             raise ValueError("Category must be a string characters.")
 
     def articles(self):
-        pass
+        return [article.title for article in Article.all if article.magazine == self]
 
     def contributors(self):
         pass
