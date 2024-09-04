@@ -4,6 +4,7 @@ class Article:
     def __init__(self, author, magazine, title):
         self.author = author
         self.magazine = magazine
+        Article.all.append(self)
         if isinstance(title, str) and 5 <= len(title) <= 50  :
             self._title = title
         else:
@@ -48,7 +49,7 @@ class Author:
         pass
 
 class Magazine:
-    
+    all = []
     def __init__(self, name, category):
         self.name = name        
         self.category = category
