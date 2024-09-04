@@ -2,10 +2,11 @@ class Article:
     all = []
 
     def __init__(self, author, magazine, title):
-        self.author = author
-        self.magazine = magazine
+        self._author = author
+        self._magazine = magazine
         Article.all.append(self)
         self.set_title(title)
+
 
     def set_title(self, title):
         if isinstance(title, str) and 5 <= len(title) <= 50:
@@ -31,6 +32,15 @@ class Article:
             self._magazine = value
         else:
             raise TypeError("Magazine must be of type Magazine")
+    @property
+    def author(self):
+        return self._author
+    
+    @author.setter
+    def author(self, value):
+        if isinstance(self, Author):
+            self._author=value
+
 
 
 
@@ -92,10 +102,10 @@ class Magazine:
             raise ValueError("Category must be a non-empty string.")
 
     def articles(self):
-        return [article.title for article in Article.all if article.magazine == self]
+        return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        pass
+        return list(set(article.author for article in self.articles() if isinstance(article.author, Author)))
 
     def article_titles(self):
         pass
