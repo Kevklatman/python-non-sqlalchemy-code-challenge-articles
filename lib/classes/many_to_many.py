@@ -54,7 +54,6 @@ class Article:
 
 
 class Author:
-    all = []
     def __init__(self, name):
         if isinstance(name, str) and len(name) > 0:
             self._name = name
@@ -68,7 +67,6 @@ class Author:
         else:
             raise AttributeError("Author name has not been initialized.")
         
-
     def articles(self):
         return [article for article in Article.all if article.author == self]
 
@@ -136,4 +134,16 @@ class Magazine:
         return [article.title for article in articles]
 
     def contributing_authors(self):
-        pass
+        articles = [article for article in Article.all if article.magazine == self]
+        
+        if not articles:
+            return None
+        
+        author_counts = {}
+        for article in articles:
+            if isinstance(article.author, Author):
+                author_counts[article.author] = author_counts.get(article.author, 0) + 1
+        
+        contributing_authors = [author for author, count in author_counts.items() if count > 2]
+        
+        return contributing_authors if contributing_authors else None
