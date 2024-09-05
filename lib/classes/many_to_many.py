@@ -7,7 +7,6 @@ class Article:
         Article.all.append(self)
         self.set_title(title)
 
-
     def set_title(self, title):
         if isinstance(title, str) and 5 <= len(title) <= 50:
             self._title = title
@@ -32,16 +31,26 @@ class Article:
             self._magazine = value
         else:
             raise TypeError("Magazine must be of type Magazine")
+        
     @property
     def author(self):
         return self._author
-    
+
     @author.setter
     def author(self, value):
-        if isinstance(self, Author):
-            self._author=value
+        self.set_author(value)
 
+    def set_author(self, author):
+        if isinstance(author, Author):
+            self._author = author
+        else:
+            raise TypeError("Author must be of type Author")
+    
+    def articles(self):
+        return [article for article in Article.all if article.author == self]
 
+    def magazines(self):
+        return list(set(article.magazine for article in self.articles()))
 
 
 class Author:
