@@ -83,7 +83,13 @@ class Author:
         return new_article
 
     def topic_areas(self):
-        pass
+        articles = self.articles()
+        
+        if not articles:
+            return None
+        
+        categories = set(article.magazine.category for article in articles)
+        return list(categories)
 
 class Magazine:
     all = []
